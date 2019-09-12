@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.ssm.mapperxml.ChekoutMapper" >
+  <resultMap id="BaseResultMap" type="cn.itcast.ssm.po.Chekout" >
+    <id column="chid" property="chid" jdbcType="INTEGER" />
+    <result column="chk_time" property="chkTime" jdbcType="DATE" />
+    <result column="days" property="days" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="gid" property="gid" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid">
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    chid, chk_time, days, money, gid, remark
+  </sql>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.itcast.ssm.po.ChekoutExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chekout
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from chekout
+    where chid = #{chid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from chekout
+    where chid = #{chid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.itcast.ssm.po.ChekoutExample" >
+    delete from chekout
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.itcast.ssm.po.Chekout" >
+    insert into chekout (chid, chk_time, days, 
+      money, gid, remark)
+    values (#{chid,jdbcType=INTEGER}, #{chkTime,jdbcType=DATE}, #{days,jdbcType=INTEGER}, 
+      #{money,jdbcType=DOUBLE}, #{gid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itcast.ssm.po.Chekout" >
+    insert into chekout
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="chid != null" >
+        chid,
+      </if>
+      <if test="chkTime != null" >
+        chk_time,
+      </if>
+      <if test="days != null" >
+        days,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="chid != null" >
+        #{chid,jdbcType=INTEGER},
+      </if>
+      <if test="chkTime != null" >
+        #{chkTime,jdbcType=DATE},
+      </if>
+      <if test="days != null" >
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.itcast.ssm.po.ChekoutExample" resultType="java.lang.Integer" >
+    select count(*) from chekout
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update chekout
+    <set >
+      <if test="record.chid != null" >
+        chid = #{record.chid,jdbcType=INTEGER},
+      </if>
+      <if test="record.chkTime != null" >
+        chk_time = #{record.chkTime,jdbcType=DATE},
+      </if>
+      <if test="record.days != null" >
+        days = #{record.days,jdbcType=INTEGER},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.gid != null" >
+        gid = #{record.gid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update chekout
+    set chid = #{record.chid,jdbcType=INTEGER},
+      chk_time = #{record.chkTime,jdbcType=DATE},
+      days = #{record.days,jdbcType=INTEGER},
+      money = #{record.money,jdbcType=DOUBLE},
+      gid = #{record.gid,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itcast.ssm.po.Chekout" >
+    update chekout
+    <set >
+      <if test="chkTime != null" >
+        chk_time = #{chkTime,jdbcType=DATE},
+      </if>
+      <if test="days != null" >
+        days = #{days,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where chid = #{chid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itcast.ssm.po.Chekout" >
+    update chekout
+    set chk_time = #{chkTime,jdbcType=DATE},
+      days = #{days,jdbcType=INTEGER},
+      money = #{money,jdbcType=DOUBLE},
+      gid = #{gid,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where chid = #{chid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.itcast.ssm.mapperxml.EmpleMapper" >
+  <resultMap id="BaseResultMap" type="cn.itcast.ssm.po.Emple" >
+    <id column="empno" property="empno" jdbcType="INTEGER" />
+    <result column="ename" property="ename" jdbcType="VARCHAR" />
+    <result column="sal" property="sal" jdbcType="DOUBLE" />
+    <result column="job" property="job" jdbcType="VARCHAR" />
+    <result column="dname" property="dname" jdbcType="VARCHAR" />
+    <result column="hiredate" property="hiredate" jdbcType="DATE" />
+    <result column="comm" property="comm" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    empno, ename, sal, job, dname, hiredate, comm
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.itcast.ssm.po.EmpleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from emple
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from emple
+    where empno = #{empno,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from emple
+    where empno = #{empno,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.itcast.ssm.po.EmpleExample" >
+    delete from emple
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.itcast.ssm.po.Emple" >
+    insert into emple (empno, ename, sal, 
+      job, dname, hiredate, 
+      comm)
+    values (#{empno,jdbcType=INTEGER}, #{ename,jdbcType=VARCHAR}, #{sal,jdbcType=DOUBLE}, 
+      #{job,jdbcType=VARCHAR}, #{dname,jdbcType=VARCHAR}, #{hiredate,jdbcType=DATE}, 
+      #{comm,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itcast.ssm.po.Emple" >
+    insert into emple
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="empno != null" >
+        empno,
+      </if>
+      <if test="ename != null" >
+        ename,
+      </if>
+      <if test="sal != null" >
+        sal,
+      </if>
+      <if test="job != null" >
+        job,
+      </if>
+      <if test="dname != null" >
+        dname,
+      </if>
+      <if test="hiredate != null" >
+        hiredate,
+      </if>
+      <if test="comm != null" >
+        comm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="empno != null" >
+        #{empno,jdbcType=INTEGER},
+      </if>
+      <if test="ename != null" >
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="sal != null" >
+        #{sal,jdbcType=DOUBLE},
+      </if>
+      <if test="job != null" >
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="dname != null" >
+        #{dname,jdbcType=VARCHAR},
+      </if>
+      <if test="hiredate != null" >
+        #{hiredate,jdbcType=DATE},
+      </if>
+      <if test="comm != null" >
+        #{comm,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.itcast.ssm.po.EmpleExample" resultType="java.lang.Integer" >
+    select count(*) from emple
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update emple
+    <set >
+      <if test="record.empno != null" >
+        empno = #{record.empno,jdbcType=INTEGER},
+      </if>
+      <if test="record.ename != null" >
+        ename = #{record.ename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sal != null" >
+        sal = #{record.sal,jdbcType=DOUBLE},
+      </if>
+      <if test="record.job != null" >
+        job = #{record.job,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dname != null" >
+        dname = #{record.dname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hiredate != null" >
+        hiredate = #{record.hiredate,jdbcType=DATE},
+      </if>
+      <if test="record.comm != null" >
+        comm = #{record.comm,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update emple
+    set empno = #{record.empno,jdbcType=INTEGER},
+      ename = #{record.ename,jdbcType=VARCHAR},
+      sal = #{record.sal,jdbcType=DOUBLE},
+      job = #{record.job,jdbcType=VARCHAR},
+      dname = #{record.dname,jdbcType=VARCHAR},
+      hiredate = #{record.hiredate,jdbcType=DATE},
+      comm = #{record.comm,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itcast.ssm.po.Emple" >
+    update emple
+    <set >
+      <if test="ename != null" >
+        ename = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="sal != null" >
+        sal = #{sal,jdbcType=DOUBLE},
+      </if>
+      <if test="job != null" >
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="dname != null" >
+        dname = #{dname,jdbcType=VARCHAR},
+      </if>
+      <if test="hiredate != null" >
+        hiredate = #{hiredate,jdbcType=DATE},
+      </if>
+      <if test="comm != null" >
+        comm = #{comm,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where empno = #{empno,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itcast.ssm.po.Emple" >
+    update emple
+    set ename = #{ename,jdbcType=VARCHAR},
+      sal = #{sal,jdbcType=DOUBLE},
+      job = #{job,jdbcType=VARCHAR},
+      dname = #{dname,jdbcType=VARCHAR},
+      hiredate = #{hiredate,jdbcType=DATE},
+      comm = #{comm,jdbcType=DOUBLE}
+    where empno = #{empno,jdbcType=INTEGER}
+  </update>
+</mapper>
